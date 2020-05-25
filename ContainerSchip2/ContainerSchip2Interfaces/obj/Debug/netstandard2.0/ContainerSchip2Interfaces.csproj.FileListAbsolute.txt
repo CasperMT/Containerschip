@@ -1,0 +1,8 @@
+C:\Users\caspe\source\repos\ContainerSchip2\ContainerSchip2Interfaces\bin\Debug\netstandard2.0\ContainerSchip2Interfaces.deps.json
+C:\Users\caspe\source\repos\ContainerSchip2\ContainerSchip2Interfaces\bin\Debug\netstandard2.0\ContainerSchip2Interfaces.dll
+C:\Users\caspe\source\repos\ContainerSchip2\ContainerSchip2Interfaces\bin\Debug\netstandard2.0\ContainerSchip2Interfaces.pdb
+C:\Users\caspe\source\repos\ContainerSchip2\ContainerSchip2Interfaces\obj\Debug\netstandard2.0\ContainerSchip2Interfaces.csproj.CoreCompileInputs.cache
+C:\Users\caspe\source\repos\ContainerSchip2\ContainerSchip2Interfaces\obj\Debug\netstandard2.0\ContainerSchip2Interfaces.AssemblyInfoInputs.cache
+C:\Users\caspe\source\repos\ContainerSchip2\ContainerSchip2Interfaces\obj\Debug\netstandard2.0\ContainerSchip2Interfaces.AssemblyInfo.cs
+C:\Users\caspe\source\repos\ContainerSchip2\ContainerSchip2Interfaces\obj\Debug\netstandard2.0\ContainerSchip2Interfaces.dll
+C:\Users\caspe\source\repos\ContainerSchip2\ContainerSchip2Interfaces\obj\Debug\netstandard2.0\ContainerSchip2Interfaces.pdb
