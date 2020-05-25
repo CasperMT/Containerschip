@@ -1,0 +1,13 @@
+C:\Users\caspe\source\repos\ContainerSchipProject\ContainerSchipProject\bin\Debug\ContainerSchipProject.exe.config
+C:\Users\caspe\source\repos\ContainerSchipProject\ContainerSchipProject\bin\Debug\ContainerSchipProject.exe
+C:\Users\caspe\source\repos\ContainerSchipProject\ContainerSchipProject\bin\Debug\ContainerSchipProject.pdb
+C:\Users\caspe\source\repos\ContainerSchipProject\ContainerSchipProject\bin\Debug\Interfaces.dll
+C:\Users\caspe\source\repos\ContainerSchipProject\ContainerSchipProject\bin\Debug\Interfaces.pdb
+C:\Users\caspe\source\repos\ContainerSchipProject\ContainerSchipProject\obj\Debug\ContainerSchipProject.csprojAssemblyReference.cache
+C:\Users\caspe\source\repos\ContainerSchipProject\ContainerSchipProject\obj\Debug\ContainerSchipProject.Form1.resources
+C:\Users\caspe\source\repos\ContainerSchipProject\ContainerSchipProject\obj\Debug\ContainerSchipProject.Properties.Resources.resources
+C:\Users\caspe\source\repos\ContainerSchipProject\ContainerSchipProject\obj\Debug\ContainerSchipProject.csproj.GenerateResource.cache
+C:\Users\caspe\source\repos\ContainerSchipProject\ContainerSchipProject\obj\Debug\ContainerSchipProject.csproj.CoreCompileInputs.cache
+C:\Users\caspe\source\repos\ContainerSchipProject\ContainerSchipProject\obj\Debug\ContainerSchipProject.csproj.CopyComplete
+C:\Users\caspe\source\repos\ContainerSchipProject\ContainerSchipProject\obj\Debug\ContainerSchipProject.exe
+C:\Users\caspe\source\repos\ContainerSchipProject\ContainerSchipProject\obj\Debug\ContainerSchipProject.pdb
