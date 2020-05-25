@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "KsslQp+oy+sRXIzXd29MVbsDjUIABpsqfWkPPcf2CtmnBUfKdGzeXfO6jd1tvkBDSWhE8hkvj8dtucBXL0jx1g==",
+  "dgSpecHash": "HHiCV0Q3ETvFBIPuxYynJq3pk4gw2b1Xya1ZaHNeuVCvoXnBykX34Fgoh+9G51NPDmSQFnaO4B7rgFjdB3/yOg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\caspe\\source\\repos\\ContainerSchip2\\ContainerSchip2Interfaces\\ContainerSchip2Interfaces.csproj",
+  "projectFilePath": "C:\\Users\\caspe\\Documents\\GitHubSchool\\Containerschip\\ContainerSchip2\\ContainerSchip2Interfaces\\ContainerSchip2Interfaces.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\caspe\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512",
+    "C:\\Users\\caspe\\.nuget\\packages\\selenium.firefox.webdriver\\0.26.0\\selenium.firefox.webdriver.0.26.0.nupkg.sha512"
   ],
   "logs": []
 }

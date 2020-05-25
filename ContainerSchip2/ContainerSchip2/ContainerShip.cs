@@ -20,11 +20,13 @@ namespace ContainerSchip2 {
             Height = height;
             Rows.Add(new Row(width, height));
         }
-        
+
         public Error AddContainer(List<IContainer> containers) {
-            if (GetAmountOfValuable(containers) > Width*2) {
+            
+            if (GetAmountOfValuable(containers) > Width * 2) {
                 return new Error() { ErrorString = "To many valuable containers for the width." };
-            } else if (GetAmountOfValuableCold(containers) > Width) {
+            }
+            else if (GetAmountOfValuableCold(containers) > Width) {
                 return new Error() { ErrorString = "To many ColdValuable containers for the width." };
             }
 
@@ -32,9 +34,11 @@ namespace ContainerSchip2 {
 
             if ((GetAmountOfValuable(containers) - GetAmountOfValuableCold(containers)) <= Width) {
                 return SortOption1(containers);
-            } else {
+            }
+            else {
                 return SortOption2(containers);
             }
+            
         }
 
         private Error SortOption1(List<IContainer> containers) {
@@ -58,19 +62,22 @@ namespace ContainerSchip2 {
                 }
             }
             DeleteContainersFromList(tempContainers);
-
             if (containersValuable.Count <= 0 && containersNormal.Count <= 0) {
-                return null;
+                if (GetTotalWeight(containers) < GetMinimumWeight()) {
+                    return new Error() { ErrorString = "Het totale gewicht van de containers is te weinig voor de boot." };
+                }
+                else {
+                    return null;
+                }
             }
 
             Rows.Add(new Row(Width, Height));
-
             foreach (IContainer container in containersValuable) {
                 if (!Rows[1].AddContainer(container)) {
                     return new Error() { ErrorString = "To many Valuable containers for the given dimensions." };
                 }
             }
-
+            Console.WriteLine("ddddd6");
             tempContainers.Clear();
             foreach (IContainer container in containersNormal) {
                 if (Rows[1].AddContainer(container)) {
@@ -78,16 +85,17 @@ namespace ContainerSchip2 {
                 }
             }
             DeleteContainersFromList(tempContainers);
-
+            Console.WriteLine("ddddd7");
             if (containersNormal.Count > 0) {
                 AddNormalContainers();
             }
 
+            Console.WriteLine($"--->{GetTotalWeight(containers)} ---->{GetMinimumWeight()}");
             if (GetTotalWeight(containers) < GetMinimumWeight()) {
                 return new Error() { ErrorString = "Het totale gewicht van de containers is te weinig voor de boot." };
             }
 
-            
+
             return null;
         }
 
@@ -122,7 +130,11 @@ namespace ContainerSchip2 {
             DeleteContainersFromList(tempContainers);
 
             if (containersValuable.Count <= 0 && containersNormal.Count <= 0) {
-                return null;
+                if (GetTotalWeight(containers) < GetMinimumWeight()) {
+                    return new Error() { ErrorString = "Het totale gewicht van de containers is te weinig voor de boot." };
+                } else {
+                    return null;
+                }
             }
 
             Rows.Add(new Row(Width, Height));
@@ -145,6 +157,7 @@ namespace ContainerSchip2 {
                 AddNormalContainers();
             }
 
+            Console.WriteLine($"--->{GetTotalWeight(containers)} ---->{GetMinimumWeight()}");
             if (GetTotalWeight(containers) < GetMinimumWeight()) {
                 return new Error() { ErrorString = "Het totale gewicht van de containers is te weinig voor de boot." };
             }
@@ -202,16 +215,19 @@ namespace ContainerSchip2 {
             foreach (IContainer container in containers) {
                 if (container is Container) {
                     containersNormal.Add(container);
-                } else if (container is ContainerCold) {
+                }
+                else if (container is ContainerCold) {
                     containersCold.Add(container);
-                } else if (container is ContainerValuableCold) {
+                }
+                else if (container is ContainerValuableCold) {
                     containersValuableCold.Add(container);
-                } else {
+                }
+                else {
                     containersValuable.Add(container);
                 }
             }
         }
-        
+
         private int GetTotalWeight(List<IContainer> containers) {
             int weight = 0;
             foreach (IContainer container in containers) {
@@ -221,11 +237,11 @@ namespace ContainerSchip2 {
         }
 
         private int GetMinimumWeight() {
-            return Rows.Count * Width * 160000/2;
+            return Rows.Count * Width * 160000 / 2;
         }
-        
+
         private void DeleteContainersFromList(List<IContainer> containers) {
-            foreach(IContainer container in containers) {
+            foreach (IContainer container in containers) {
                 containersNormal.Remove(container);
             }
         }
@@ -246,8 +262,88 @@ namespace ContainerSchip2 {
         }
 
         public void Show() {
+            string urlString = $"https://i872272core.venus.fhict.nl/ContainerVisualizer/index.html?length={Width}&width={Rows.Count}&stacks=";
+            string url = "";
+            foreach (Row row in Rows) {
+                foreach (Pile pile in row.PilesLeft.Piles) {
+                    foreach (IContainer container in pile.Containers) {
+                        urlString += ContainerToNumber(container) + "-";
+                    }
+                    urlString = urlString.Remove(urlString.Length - 1);
+                    urlString += ",";
+                }
 
+
+                if (Width%2 == 1) {
+                    foreach (IContainer container in row.PileMiddle.Containers) {
+                        urlString += ContainerToNumber(container) + "-";
+                    }
+                    urlString = urlString.Remove(urlString.Length - 1);
+                    urlString += ",";
+                }
+                
+
+
+                foreach (Pile pile in row.PilesRight.Piles) {
+                    foreach (IContainer container in pile.Containers) {
+                        urlString += ContainerToNumber(container) + "-";
+                    }
+                    urlString = urlString.Remove(urlString.Length - 1);
+                    urlString += ",";
+                }
+                urlString = urlString.Remove(urlString.Length - 1);
+
+                urlString += "/";
+            }
+            urlString = urlString.Remove(urlString.Length - 1);
+            urlString += "&weights=";
+            foreach (Row row in Rows) {
+                foreach (Pile pile in row.PilesLeft.Piles) {
+                    foreach (IContainer container in pile.Containers) {
+                        urlString += container.Weight.ToString() + "-";
+                    }
+                    urlString = urlString.Remove(urlString.Length - 1);
+                    urlString += ",";
+                }
+
+
+                foreach (IContainer container in row.PileMiddle.Containers) {
+                    urlString += container.Weight.ToString() + "-";
+                }
+                urlString = urlString.Remove(urlString.Length - 1);
+                urlString += ",";
+
+
+                foreach (Pile pile in row.PilesRight.Piles) {
+                    foreach (IContainer container in pile.Containers) {
+                        urlString += container.Weight.ToString() + "-";
+                    }
+                    urlString = urlString.Remove(urlString.Length - 1);
+                    urlString += ",";
+                }
+                urlString = urlString.Remove(urlString.Length - 1);
+
+                urlString += "/";
+            }
+            urlString = urlString.Remove(urlString.Length - 1);
+            Console.WriteLine(urlString);
         }
 
+        private string ContainerToNumber(IContainer container) {
+
+            if (container is Container) {
+                return "1";
+            }
+            else if (container is ContainerValuable) {
+                return "2";
+            }
+            else if (container is ContainerValuableCold) {
+                return "4";
+            }
+            else {
+                return "3";
+            }
+
+        }
     }
 }

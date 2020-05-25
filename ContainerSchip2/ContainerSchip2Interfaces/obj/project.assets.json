@@ -25,6 +25,12 @@
         "build": {
           "build/netstandard2.0/NETStandard.Library.targets": {}
         }
+      },
+      "Selenium.Firefox.WebDriver/0.26.0": {
+        "type": "package",
+        "build": {
+          "build/Selenium.Firefox.WebDriver.targets": {}
+        }
       }
     }
   },
@@ -171,11 +177,25 @@
         "netstandard.library.2.0.3.nupkg.sha512",
         "netstandard.library.nuspec"
       ]
+    },
+    "Selenium.Firefox.WebDriver/0.26.0": {
+      "sha512": "l0N+Vw4/Y1kq/BX5JnRbgFSVkNC89EH3Vg/T1KlchO9MTOgGVdn2JGqNJWXZ7recxWu7WolCvUBPmzqnMQlSaQ==",
+      "type": "package",
+      "path": "selenium.firefox.webdriver/0.26.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "build/Selenium.Firefox.WebDriver.targets",
+        "driver/geckodriver.exe",
+        "selenium.firefox.webdriver.0.26.0.nupkg.sha512",
+        "selenium.firefox.webdriver.nuspec"
+      ]
     }
   },
   "projectFileDependencyGroups": {
     ".NETStandard,Version=v2.0": [
-      "NETStandard.Library >= 2.0.3"
+      "NETStandard.Library >= 2.0.3",
+      "Selenium.Firefox.WebDriver >= 0.26.0"
     ]
   },
   "packageFolders": {
@@ -185,11 +205,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\caspe\\source\\repos\\ContainerSchip2\\ContainerSchip2Interfaces\\ContainerSchip2Interfaces.csproj",
+      "projectUniqueName": "C:\\Users\\caspe\\Documents\\GitHubSchool\\Containerschip\\ContainerSchip2\\ContainerSchip2Interfaces\\ContainerSchip2Interfaces.csproj",
       "projectName": "ContainerSchip2Interfaces",
-      "projectPath": "C:\\Users\\caspe\\source\\repos\\ContainerSchip2\\ContainerSchip2Interfaces\\ContainerSchip2Interfaces.csproj",
+      "projectPath": "C:\\Users\\caspe\\Documents\\GitHubSchool\\Containerschip\\ContainerSchip2\\ContainerSchip2Interfaces\\ContainerSchip2Interfaces.csproj",
       "packagesPath": "C:\\Users\\caspe\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\caspe\\source\\repos\\ContainerSchip2\\ContainerSchip2Interfaces\\obj\\",
+      "outputPath": "C:\\Users\\caspe\\Documents\\GitHubSchool\\Containerschip\\ContainerSchip2\\ContainerSchip2Interfaces\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -224,6 +244,10 @@
             "target": "Package",
             "version": "[2.0.3, )",
             "autoReferenced": true
+          },
+          "Selenium.Firefox.WebDriver": {
+            "target": "Package",
+            "version": "[0.26.0, )"
           }
         },
         "imports": [

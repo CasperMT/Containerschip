@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace ContainerSchip2 {
     public partial class Form1 : Form {
         public string NameRadio { get; private set; }
@@ -69,15 +70,13 @@ namespace ContainerSchip2 {
 
                 if (error == null) {
                     ship.Print();
-                }
-                else {
+                } else {
                     MessageBox.Show(error.ErrorString);
 
                     if (error.ErrorString.Equals("Het totale gewicht van de containers is te weinig voor de boot.")) {
                         ship.Print();
                     }
                 }
-
 
             }
 
@@ -108,5 +107,26 @@ namespace ContainerSchip2 {
 
             }
         }
+
+        private void button3_Click(object sender, EventArgs e) {
+            UnitTests.Valuable();
+        }
+
+        private void button4_Click(object sender, EventArgs e) {
+            UnitTests.Cooled();
+        }
+
+        private void button5_Click(object sender, EventArgs e) {
+            UnitTests.CooledValuable();
+        }
+
+        private void button6_Click(object sender, EventArgs e) {
+            UnitTests.MinWeight();
+        }
+
+        private void button7_Click(object sender, EventArgs e) {
+            UnitTests.MaxWidth();
+        }
+
     }
 }

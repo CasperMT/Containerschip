@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\caspe\\source\\repos\\ContainerSchip2\\ContainerSchip2Interfaces\\ContainerSchip2Interfaces.csproj": {}
+    "C:\\Users\\caspe\\Documents\\GitHubSchool\\Containerschip\\ContainerSchip2\\ContainerSchip2Interfaces\\ContainerSchip2Interfaces.csproj": {}
   },
   "projects": {
-    "C:\\Users\\caspe\\source\\repos\\ContainerSchip2\\ContainerSchip2Interfaces\\ContainerSchip2Interfaces.csproj": {
+    "C:\\Users\\caspe\\Documents\\GitHubSchool\\Containerschip\\ContainerSchip2\\ContainerSchip2Interfaces\\ContainerSchip2Interfaces.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\caspe\\source\\repos\\ContainerSchip2\\ContainerSchip2Interfaces\\ContainerSchip2Interfaces.csproj",
+        "projectUniqueName": "C:\\Users\\caspe\\Documents\\GitHubSchool\\Containerschip\\ContainerSchip2\\ContainerSchip2Interfaces\\ContainerSchip2Interfaces.csproj",
         "projectName": "ContainerSchip2Interfaces",
-        "projectPath": "C:\\Users\\caspe\\source\\repos\\ContainerSchip2\\ContainerSchip2Interfaces\\ContainerSchip2Interfaces.csproj",
+        "projectPath": "C:\\Users\\caspe\\Documents\\GitHubSchool\\Containerschip\\ContainerSchip2\\ContainerSchip2Interfaces\\ContainerSchip2Interfaces.csproj",
         "packagesPath": "C:\\Users\\caspe\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\caspe\\source\\repos\\ContainerSchip2\\ContainerSchip2Interfaces\\obj\\",
+        "outputPath": "C:\\Users\\caspe\\Documents\\GitHubSchool\\Containerschip\\ContainerSchip2\\ContainerSchip2Interfaces\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -46,6 +46,10 @@
               "target": "Package",
               "version": "[2.0.3, )",
               "autoReferenced": true
+            },
+            "Selenium.Firefox.WebDriver": {
+              "target": "Package",
+              "version": "[0.26.0, )"
             }
           },
           "imports": [
