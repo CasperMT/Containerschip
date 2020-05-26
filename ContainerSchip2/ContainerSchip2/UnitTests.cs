@@ -62,7 +62,7 @@ namespace ContainerSchip2 {
             containers.Add(new ContainerValuableCold(20000));
 
             for (int i = 0; i < 10; i++) {
-                containers.Add(new Container(20000));
+                containers.Add(new Container(26000));
             }
 
             containers.Add(new ContainerValuableCold(20000));
@@ -117,6 +117,44 @@ namespace ContainerSchip2 {
             else {
                 MessageBox.Show(error.ErrorString);
             }
+        }
+
+        public static void MaxWeightOnContiainers() {
+            List<IContainer> containers = new List<IContainer>();
+
+            for (int i = 0; i < 15; i++) {
+                containers.Add(new Container(26000));
+            }
+
+            ContainerShip ship = new ContainerShip(4, 10);
+            Error error = ship.AddContainer(containers);
+
+            if (error == null) {
+                ship.Print();
+            }
+            else {
+                MessageBox.Show(error.ErrorString);
+            }
+        }
+
+        public static void WeightDistribution() {
+            List<IContainer> containers = new List<IContainer>();
+
+            for (int i = 0; i < 15; i++) {
+                containers.Add(new Container(26000));
+            }
+
+            ContainerShip ship = new ContainerShip(4, 10);
+            Error error = ship.AddContainer(containers);
+
+            if (error == null) {
+                ship.Print();
+                ship.PrintWeightDistribution();
+            } else {
+                MessageBox.Show(error.ErrorString);
+            }
+
+
         }
 
     }

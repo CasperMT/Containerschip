@@ -77,7 +77,7 @@ namespace ContainerSchip2 {
                     return new Error() { ErrorString = "To many Valuable containers for the given dimensions." };
                 }
             }
-            Console.WriteLine("ddddd6");
+
             tempContainers.Clear();
             foreach (IContainer container in containersNormal) {
                 if (Rows[1].AddContainer(container)) {
@@ -85,16 +85,18 @@ namespace ContainerSchip2 {
                 }
             }
             DeleteContainersFromList(tempContainers);
-            Console.WriteLine("ddddd7");
+
             if (containersNormal.Count > 0) {
                 AddNormalContainers();
             }
 
-            Console.WriteLine($"--->{GetTotalWeight(containers)} ---->{GetMinimumWeight()}");
             if (GetTotalWeight(containers) < GetMinimumWeight()) {
                 return new Error() { ErrorString = "Het totale gewicht van de containers is te weinig voor de boot." };
             }
 
+            if (!CheckWeightDistribution()) {
+                return new Error() { ErrorString = "HEt gewicht kan niet goed worden verdeeld" };
+            }
 
             return null;
         }
@@ -162,6 +164,9 @@ namespace ContainerSchip2 {
                 return new Error() { ErrorString = "Het totale gewicht van de containers is te weinig voor de boot." };
             }
 
+            if (!CheckWeightDistribution()) {
+                return new Error() { ErrorString = "HEt gewicht kan niet goed worden verdeeld" };
+            }
 
             return null;
         }
@@ -327,6 +332,38 @@ namespace ContainerSchip2 {
             }
             urlString = urlString.Remove(urlString.Length - 1);
             Console.WriteLine(urlString);
+        }
+
+        public void PrintWeightDistribution() {
+            double totalWeight = 0;
+            double leftWeight = 0;
+            double rightWeight = 0;
+
+            foreach (Row row in Rows) {
+                totalWeight += row.GetTotalWeight();
+                leftWeight += row.GetLeftWeight();
+                rightWeight += row.GetRightWeight();
+            }
+
+            Console.WriteLine($"Weight distribution: {Math.Round(leftWeight / totalWeight * 100, 2)}/{Math.Round(rightWeight / totalWeight * 100, 2)}");
+        }
+
+        private bool CheckWeightDistribution() {
+            double totalWeight = 0;
+            double leftWeight = 0;
+            double rightWeight = 0;
+
+            foreach (Row row in Rows) {
+                totalWeight += row.GetTotalWeight();
+                leftWeight += row.GetLeftWeight();
+                rightWeight += row.GetRightWeight();
+            }
+
+            if (leftWeight / totalWeight * 100 > 60 || rightWeight / totalWeight * 100 > 60) {
+                return false;
+            } else {
+                return true;
+            }
         }
 
         private string ContainerToNumber(IContainer container) {

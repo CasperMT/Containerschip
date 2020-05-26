@@ -70,11 +70,13 @@ namespace ContainerSchip2 {
 
                 if (error == null) {
                     ship.Print();
+                    ship.PrintWeightDistribution();
                 } else {
                     MessageBox.Show(error.ErrorString);
 
                     if (error.ErrorString.Equals("Het totale gewicht van de containers is te weinig voor de boot.")) {
                         ship.Print();
+                        ship.PrintWeightDistribution();
                     }
                 }
 
@@ -128,5 +130,12 @@ namespace ContainerSchip2 {
             UnitTests.MaxWidth();
         }
 
+        private void button8_Click(object sender, EventArgs e) {
+            UnitTests.MaxWeightOnContiainers();
+        }
+
+        private void button9_Click(object sender, EventArgs e) {
+            UnitTests.WeightDistribution();
+        }
     }
 }

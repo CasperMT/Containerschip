@@ -41,26 +41,28 @@ namespace ContainerSchip2.Types {
                     if (PilesRight.AddContainer(container)) {
                         return true;
                     }
-                    else {
+                    else if ((PilesLeft.GetWeight()+container.Weight)/(PilesLeft.GetWeight() + PilesRight.GetWeight() + container.Weight) <= 0.6){
                         if (PilesLeft.AddContainer(container)) {
                             return true;
                         }
                         else {
                             return false;
                         }
+                    } else {
+                        return false;
                     }
-                }
-                else {
+                } else {
                     if (PilesLeft.AddContainer(container)) {
                         return true;
-                    }
-                    else {
+                    } else if ((PilesRight.GetWeight() + container.Weight) / (PilesRight.GetWeight() + PilesLeft.GetWeight() + container.Weight) <= 0.6) {
                         if (PilesRight.AddContainer(container)) {
                             return true;
                         }
                         else {
                             return false;
                         }
+                    } else {
+                        return false;
                     }
                 }
             } else {
@@ -80,13 +82,15 @@ namespace ContainerSchip2.Types {
                     } else {
                         if (PilesLeft.AddContainer(container)) {
                             return true;
-                        } else {
+                        } else if ((PilesLeft.GetWeight() + container.Weight) / (PilesLeft.GetWeight() + PilesRight.GetWeight() + container.Weight) <= 0.6) {
                             if (PilesRight.AddContainer(container)) {
                                 return true;
                             }
                             else {
                                 return false;
                             }
+                        } else {
+                            return false;
                         }
                     }
                 }
@@ -191,6 +195,21 @@ namespace ContainerSchip2.Types {
             }
 
         }
-        
+
+        public int GetTotalWeight() {
+            int weight = PilesRight.GetWeight();
+            weight += PilesLeft.GetWeight();
+            weight += PileMiddle.GetTotalWeight();
+            return weight;
+        }
+
+        public int GetLeftWeight() {
+            return PilesLeft.GetWeight();
+
+        }
+
+        public int GetRightWeight() {
+            return PilesRight.GetWeight();
+        }
     }
 }
