@@ -2,176 +2,275 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ContainerSchip2.Types {
     public class Row {
-        public Pile PileMiddle { get; private set; }
-        public PilesRight PilesRight { get; private set; }
-        public PilesLeft PilesLeft { get; private set; }
+        public List<Pile> Piles { get; set; } = new List<Pile>();
         public bool Even { get; private set; }
         public int Width { get; private set; }
         public int Height { get; private set; }
-        //public int Id { get; private set; } = 0;
 
         public Row(int width, int height) {
-            PileMiddle = new Pile(height);
             Width = width;
             Height = height;
-            if (width%2 == 0) {
+
+            if (width % 2 == 0) {
                 Even = true;
-            } else {
+            }
+            else {
                 Even = false;
             }
 
-            if (Even) {
-                PilesRight = new PilesRight(height, width / 2);
-                PilesLeft = new PilesLeft(height, width / 2);
-            } else {
-                PileMiddle = new Pile(height);
-                PilesRight = new PilesRight(height, (width-1) / 2);
-                PilesLeft = new PilesLeft(height, (width-1) / 2);
+            for (int i=0; i < Width; i++) {
+                Piles.Add(new Pile(height));
             }
         }
 
         public bool AddContainer(IContainer container) {
             if (Even) {
-                if (PilesRight.GetWeight() < PilesLeft.GetWeight()) {
-                    if (PilesRight.AddContainer(container)) {
-                        return true;
-                    }
-                    else if ((PilesLeft.GetWeight()+container.Weight)/(PilesLeft.GetWeight() + PilesRight.GetWeight() + container.Weight) <= 0.6){
-                        if (PilesLeft.AddContainer(container)) {
-                            return true;
-                        }
-                        else {
-                            return false;
-                        }
-                    } else {
-                        return false;
-                    }
-                } else {
-                    if (PilesLeft.AddContainer(container)) {
-                        return true;
-                    } else if ((PilesRight.GetWeight() + container.Weight) / (PilesRight.GetWeight() + PilesLeft.GetWeight() + container.Weight) <= 0.6) {
-                        if (PilesRight.AddContainer(container)) {
-                            return true;
-                        }
-                        else {
-                            return false;
-                        }
-                    } else {
-                        return false;
-                    }
-                }
+                return AddContainerEven(container);
             } else {
-                if (PileMiddle.AddContainer(container)) {
-                    return true;
-                } else {
-                    if (PilesRight.GetWeight() < PilesLeft.GetWeight()) {
-                        if (PilesRight.AddContainer(container)) {
-                            return true;
-                        } else {
-                            if (PilesLeft.AddContainer(container)) {
-                                return true;
-                            } else {
-                                return false;
-                            }
-                        }
-                    } else {
-                        if (PilesLeft.AddContainer(container)) {
-                            return true;
-                        } else if ((PilesLeft.GetWeight() + container.Weight) / (PilesLeft.GetWeight() + PilesRight.GetWeight() + container.Weight) <= 0.6) {
-                            if (PilesRight.AddContainer(container)) {
-                                return true;
-                            }
-                            else {
-                                return false;
-                            }
-                        } else {
-                            return false;
-                        }
+                return AddContainerOdd(container);
+            }
+        }
+
+        public bool AddContainerValuableOnTop(IContainer container) {
+            if (Even) {
+                foreach (Pile pile in GetSideWithLowestWeight()) {
+                    if (pile.AddValuable(container)) {
+                        return true;
                     }
                 }
+
+                if (CheckWeightDistribution(container)) {
+                    foreach (Pile pile in GetSideWithHighestWeight()) {
+                        if (pile.AddValuable(container)) {
+                            return true;
+                        }
+                    }
+
+                }
+
+                return false;
+            } else {
+                if (GetPileInMiddle().AddValuable(container)) {
+                    return true;
+                }
+
+                foreach (Pile pile in GetSideWithLowestWeight()) {
+                    if (pile.AddValuable(container)) {
+                        return true;
+                    }
+                }
+
+                if (CheckWeightDistribution(container)) {
+                    foreach (Pile pile in GetSideWithHighestWeight()) {
+                        if (pile.AddValuable(container)) {
+                            return true;
+                        }
+                    }
+
+                }
+
+                return false;
             }
         }
 
         public void Print() {
-            List<Pile> pilesLeft = PilesLeft.Reverse();
 
-            if (Even) {
-                for (int i = Height; i > -1; i--) {
-                    foreach (Pile pile in pilesLeft) {
+            for (int i = Height; i > -1; i--) {
+                foreach (Pile pile in Piles) {
 
-                        if (i < pile.Containers.Count) {
-                            Console.Write($"{GetString(pile.Containers[i])}:{FormatWeight(pile.Containers[i].Weight)} ");
-                        }
-                        else {
-                            Console.Write("+++++++++ ");
-                        }
-
+                    if (i < pile.Containers.Count) {
+                        Console.Write($"{GetString(pile.Containers[i])}:{FormatWeight(pile.Containers[i].Weight)} ");
                     }
-
-                    Console.Write(" ");
-
-                    foreach (Pile pile in PilesRight.Piles) {
-
-                        if (i < pile.Containers.Count) {
-                            Console.Write($"{GetString(pile.Containers[i])}:{FormatWeight(pile.Containers[i].Weight)} ");
-                        }
-                        else {
-                            Console.Write("+++++++++ ");
-                        }
-
-                    }
-
-                    Console.WriteLine();
-                }
-            } else {
-                for (int i = Height; i > -1; i--) {
-                    foreach (Pile pile in pilesLeft) {
-
-                        if (i < pile.Containers.Count) {
-                            Console.Write($"{GetString(pile.Containers[i])}:{FormatWeight(pile.Containers[i].Weight)} ");
-                        } else {
-                            Console.Write("+++++++++ ");
-                        }
-
-                    }
-
-                    Console.Write(" ");
-                    if (i < PileMiddle.Containers.Count) {
-                        Console.Write($"{GetString(PileMiddle.Containers[i])}:{FormatWeight(PileMiddle.Containers[i].Weight)} ");
-                    } else {
+                    else {
                         Console.Write("+++++++++ ");
                     }
-                    Console.Write(" ");
 
-                    foreach (Pile pile in PilesRight.Piles) {
+                }
 
-                        if (i < pile.Containers.Count) {
-                            Console.Write($"{GetString(pile.Containers[i])}:{FormatWeight(pile.Containers[i].Weight)} ");
-                        } else {
-                            Console.Write("+++++++++ ");
-                        }
+                Console.WriteLine();
+            }
 
-                    }
 
-                    Console.WriteLine();
+        }
+        
+        private bool AddContainerEven(IContainer container) {
+
+            foreach (Pile pile in GetSideWithLowestWeight()) {
+                if (pile.AddContainer(container)) {
+                    return true;
                 }
             }
-            
+
+            if (CheckWeightDistribution(container)) {
+                foreach (Pile pile in GetSideWithHighestWeight()) {
+                    if (pile.AddContainer(container)) {
+                        return true;
+                    }
+                }
+
+            }
+
+            return false;
         }
 
+        private bool AddContainerOdd(IContainer container) {
+
+            if (GetPileInMiddle().AddContainer(container)) {
+                return true;
+            }
+
+            foreach (Pile pile in GetSideWithLowestWeight()) {
+                if (pile.AddContainer(container)) {
+                    return true;
+                }
+            }
+
+            if (CheckWeightDistribution(container)) {
+                foreach (Pile pile in GetSideWithHighestWeight()) {
+                    if (pile.AddContainer(container)) {
+                        return true;
+                    }
+                }
+
+            }
+
+            return false;
+        }
+
+        //Krijg list met piles vand e kant die het minst weegt
+        private List<Pile> GetSideWithLowestWeight() {
+
+            if (Even) {
+                int leftWeight = 0;
+                foreach (Pile pile in Piles.Take(Piles.Count / 2)) {
+                    leftWeight += pile.GetTotalWeight();
+                }
+
+                int rightWeight = 0;
+                foreach (Pile pile in Piles.Skip(Piles.Count / 2).Take(Piles.Count / 2)) {
+                    rightWeight += pile.GetTotalWeight();
+                }
+
+                if (leftWeight < rightWeight) {
+                    return Piles.Take(Piles.Count / 2).ToList();
+                }
+                else {
+                    return Piles.Skip(Piles.Count / 2).Take(Piles.Count / 2).ToList();
+                }
+            }
+            else {
+                int leftWeight = 0;
+                foreach (Pile pile in Piles.Take((Piles.Count - 1) / 2)) {
+                    leftWeight += pile.GetTotalWeight();
+                }
+
+                int rightWeight = 0;
+                foreach (Pile pile in Piles.Skip(((Piles.Count - 1) / 2)+1).Take((Piles.Count - 1) / 2)) {
+                    rightWeight += pile.GetTotalWeight();
+                }
+
+                if (leftWeight < rightWeight) {
+                    return Piles.Take((Piles.Count - 1) / 2).ToList();
+                }
+                else {
+                    return Piles.Skip(((Piles.Count - 1) / 2) + 1).Take((Piles.Count - 1) / 2).ToList();
+                }
+            }
+
+
+        }
+
+        //Krijg list met piles vand e kant die het meest weegt
+        private List<Pile> GetSideWithHighestWeight() {
+
+            int leftWeight = 0;
+            foreach (Pile pile in Piles.Take(Piles.Count / 2)) {
+                leftWeight += pile.GetTotalWeight();
+            }
+
+            int rightWeight = 0;
+            foreach (Pile pile in Piles.Skip(Piles.Count / 2).Take(Piles.Count / 2)) {
+                rightWeight += pile.GetTotalWeight();
+            }
+
+            if (leftWeight <= rightWeight) {
+                return Piles.Take(Piles.Count / 2).ToList();
+            }
+            else {
+                return Piles.Skip(Piles.Count / 2).Take(Piles.Count / 2).ToList();
+            }
+
+        }
+
+        private Pile GetPileInMiddle() {
+            return Piles[Piles.Count - ((Piles.Count - 1) / 2) - 1];
+        }
+
+        private bool CheckWeightDistribution(IContainer container) {
+
+            if (GetLeftWeight() > GetRightWeight()) {
+                if (GetTotalWeight() != 0) {
+                    if ((GetLeftWeight() + container.Weight) / GetTotalWeight() > 0.6 || (GetLeftWeight() + container.Weight) / GetTotalWeight() < 0.4) {
+                        return false;
+                    }
+                }
+                
+            }
+            else {
+                if (GetTotalWeight() != 0) {
+                    if ((GetRightWeight() + container.Weight) / GetTotalWeight() > 0.6 || (GetRightWeight() + container.Weight) / GetTotalWeight() < 0.4) {
+                        return false;
+                    }
+                }
+               
+            }
+
+            return true;
+        }
+
+        public int GetLeftWeight() {
+            int weight = 0;
+
+            foreach (Pile pile in Piles.Take(Piles.Count / 2)) {
+                weight += pile.GetTotalWeight();
+            }
+
+            return weight;
+        }
+
+        public int GetRightWeight() {
+            int weight = 0;
+
+            foreach (Pile pile in Piles.Skip(Piles.Count / 2).Take(Piles.Count / 2)) {
+                weight += pile.GetTotalWeight();
+            }
+
+            return weight;
+        }
+       
+        public int GetTotalWeight() {
+            int weight = 0;
+
+            foreach (Pile pile in Piles) {
+                weight += pile.GetTotalWeight();
+            }
+
+            return weight;
+        }
+
+        //Nodig voor het schip uit te printen in console
         private string FormatWeight(int weight) {
-           
+
             if (weight.ToString().Length == 6) {
                 return weight.ToString();
-            } else {
+            }
+            else {
                 int amount = 6 - weight.ToString().Length;
                 string zeros = "";
-                for (int i=1; i <= amount; i++) {
+                for (int i = 1; i <= amount; i++) {
                     zeros += "0";
                 }
 
@@ -196,20 +295,16 @@ namespace ContainerSchip2.Types {
 
         }
 
-        public int GetTotalWeight() {
-            int weight = PilesRight.GetWeight();
-            weight += PilesLeft.GetWeight();
-            weight += PileMiddle.GetTotalWeight();
-            return weight;
-        }
 
-        public int GetLeftWeight() {
-            return PilesLeft.GetWeight();
+        //Voor unitTests
+        public bool CheckForCooled() {
+            foreach (Pile pile in Piles) {
+                if (pile.CheckForCold()) {
+                    return true;
+                }
+            }
 
-        }
-
-        public int GetRightWeight() {
-            return PilesRight.GetWeight();
+            return false;
         }
     }
 }

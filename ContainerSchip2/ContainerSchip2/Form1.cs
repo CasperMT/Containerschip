@@ -28,7 +28,7 @@ namespace ContainerSchip2 {
             NameRadio = radio.Name;
         }
 
-        private IContainer CreatContainer(string name, int weight) {
+        private IContainer CreateContainer(string name, int weight) {
 
             IContainer container = new Container(weight);
 
@@ -52,7 +52,6 @@ namespace ContainerSchip2 {
             return container;
         }
 
-
         private void button2_Click_1(object sender, EventArgs e) {
             if (Controls["widthBox"].Text.Length <= 0) {
                 MessageBox.Show("no width given.");
@@ -66,76 +65,32 @@ namespace ContainerSchip2 {
                 int width = Convert.ToInt32(Controls["widthBox"].Text);
                 int height = Convert.ToInt32(Controls["heightBox"].Text);
                 ContainerShip ship = new ContainerShip(width, height);
-                Error error = ship.AddContainer(containers);
+                Error error = ship.AddContainers(containers);
 
                 if (error == null) {
                     ship.Print();
-                    ship.PrintWeightDistribution();
                 } else {
-                    MessageBox.Show(error.ErrorString);
-
                     if (error.ErrorString.Equals("Het totale gewicht van de containers is te weinig voor de boot.")) {
-                        ship.Print();
-                        ship.PrintWeightDistribution();
+                        //ship.PrintWeightDistribution();
                     }
+
+                    ship.Print();
                 }
 
             }
 
         }
 
-        private void button1_Click_1(object sender, EventArgs e) {
+        private void button1_Click(object sender, EventArgs e) {
             int weight = 0;
-            if (Controls["ContentWeight"].Text.Length > 0) {
-                try {
-                    weight = Convert.ToInt32(Controls["ContentWeight"].Text);
-                }
-                catch (Exception e1) {
-                    MessageBox.Show("The maximum weight is 26000.");
-                }
 
+            foreach (Control c in Controls) {
+                if (c.Name.Equals("ContentWeight")) {
+                    weight = Convert.ToInt32(c.Text);
+                }
             }
-
-            if (weight > 26000) {
-                MessageBox.Show("The maximum weight is 26000.");
-            }
-            else {
-                if (NameRadio != null) {
-                    containers.Add(CreatContainer(NameRadio.Remove(0, 1), weight));
-                }
-                else {
-                    MessageBox.Show("Choose a container type.");
-                }
-
-            }
-        }
-
-        private void button3_Click(object sender, EventArgs e) {
-            UnitTests.Valuable();
-        }
-
-        private void button4_Click(object sender, EventArgs e) {
-            UnitTests.Cooled();
-        }
-
-        private void button5_Click(object sender, EventArgs e) {
-            UnitTests.CooledValuable();
-        }
-
-        private void button6_Click(object sender, EventArgs e) {
-            UnitTests.MinWeight();
-        }
-
-        private void button7_Click(object sender, EventArgs e) {
-            UnitTests.MaxWidth();
-        }
-
-        private void button8_Click(object sender, EventArgs e) {
-            UnitTests.MaxWeightOnContiainers();
-        }
-
-        private void button9_Click(object sender, EventArgs e) {
-            UnitTests.WeightDistribution();
+            Console.WriteLine(NameRadio);
+            containers.Add(CreateContainer(NameRadio, weight));
         }
     }
 }

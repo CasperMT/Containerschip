@@ -43,6 +43,23 @@ namespace ContainerSchip2.Types {
             }
         }
 
+        public bool AddValuable(IContainer container) {
+            if (!Containers.OfType<ContainerValuable>().Any() && !Containers.OfType<ContainerValuableCold>().Any()) {
+                if (Containers.Count > 0) {
+                    if (GetTotalWeight() - Containers[0].Weight + container.Weight <= 120000) {
+                        Containers.Add(container);
+                        return true;
+                    }
+                } else {
+                    Containers.Add(container);
+                    return true;
+                }
+                
+            }
+
+            return false;
+        }
+
         public int GetTotalWeight() {
             int weight = 0;
             
@@ -52,6 +69,7 @@ namespace ContainerSchip2.Types {
 
             return weight;
         }
+
 
         private bool CheckWeight() {
             int weight = 0;
@@ -105,20 +123,17 @@ namespace ContainerSchip2.Types {
             return true;
         }
 
-        public void Print() {
-            foreach (IContainer container in Containers) {
-                if (container is Container) {
-                    Console.WriteLine($"Container: {container.Weight}");
-                } else if (container is ContainerValuable) {
-                    Console.WriteLine($"ContainerValuable: {container.Weight}");
-                } else if (container is ContainerValuableCold) {
-                    Console.WriteLine($"ContainerValuableCold: {container.Weight}");
-                } else if (container is ContainerCold) {
-                    Console.WriteLine($"ContainerCold: {container.Weight}");
-                }
-                
-            }
-        }
 
+        public bool CheckForCold() {
+            bool found = false;
+
+            foreach (IContainer container in Containers) {
+                if (container is ContainerCold || container is ContainerValuableCold) {
+                    found = true;
+                }
+            }
+
+            return found;
+        }
     }
 }

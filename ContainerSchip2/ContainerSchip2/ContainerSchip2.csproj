@@ -66,10 +66,7 @@
     <Compile Include="Types\Containers\ContainerValuableCold.cs" />
     <Compile Include="Types\Error.cs" />
     <Compile Include="Types\Pile.cs" />
-    <Compile Include="Types\PilesLeft.cs" />
-    <Compile Include="Types\PilesRight.cs" />
     <Compile Include="Types\Row.cs" />
-    <Compile Include="UnitTests.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
