@@ -11,6 +11,13 @@ namespace ContainerSchip2.Test {
 
         [TestMethod]
         public void EmptyContainerWeight() {
+            container = new Container(0);
+
+            Assert.AreEqual(container.Weight, 4000);
+        }
+
+        [TestMethod]
+        public void DefaultWeight() {
             container = new Container();
 
             Assert.AreEqual(container.Weight, 4000);

@@ -17,6 +17,14 @@ namespace ContainerSchip2.Test {
         }
 
         [TestMethod]
+        public void SetWidthAndHeight() {
+            ship = new ContainerShip(4, 5);
+
+            Assert.AreEqual(ship.Width, 4);
+            Assert.AreEqual(ship.Height, 5);
+        }
+
+        [TestMethod]
         public void ColdInFrontRow() {
             for (int i=0; i < 10; i++) {
                 containers.Add(new Container(26000));
@@ -30,7 +38,6 @@ namespace ContainerSchip2.Test {
             for (int i=1; i < ship.Rows.Count; i++) {
                 Assert.IsFalse(ship.Rows[i].CheckForCooled());
             }
-
             Assert.IsTrue(ship.Rows[0].CheckForCooled());
         }
 
@@ -47,9 +54,54 @@ namespace ContainerSchip2.Test {
             containers.Add(new ContainerValuableCold(26000));
             
             Assert.AreEqual(ship.AddContainers(containers).ErrorString, ship.ColdValuableError);
-            ship.Print();
         }
 
+        [TestMethod]
+        public void MinWeight() {
+            for (int i = 0; i < 4; i++) {
+                containers.Add(new Container(26000));
+            }
 
+            Assert.AreEqual(ship.AddContainers(containers).ErrorString, ship.MinWeightError);
+        }
+
+        [TestMethod]
+        public void WeightDistribution() {
+            for (int i = 0; i < 3; i++) {
+                containers.Add(new Container(26000));
+            }
+
+            Assert.AreEqual(ship.AddContainers(containers).ErrorString, ship.WeightDitributionError);
+        }
+
+        [TestMethod]
+        public void MaxWidthValuable() {
+            ship = new ContainerShip(2, 5);
+            for (int i = 0; i < 5; i++) {
+                containers.Add(new ContainerValuable(26000));
+            }
+
+            Assert.AreEqual(ship.AddContainers(containers).ErrorString, ship.ValuableError);
+        }
+
+        [TestMethod]
+        public void ColdOnlyOnFirstRowElseError() {
+            ship = new ContainerShip(2, 2);
+            for (int i = 0; i < 5; i++) {
+                containers.Add(new ContainerCold(26000));
+            }
+
+            Assert.AreEqual(ship.AddContainers(containers).ErrorString, ship.ColdError);
+        }
+
+        [TestMethod]
+        public void NoErrorsInShow() {
+            ship = new ContainerShip(2, 2);
+            for (int i = 0; i < 5; i++) {
+                containers.Add(new ContainerCold(26000));
+            }
+
+            Assert.IsTrue(ship.Show());
+        }
     }
 }

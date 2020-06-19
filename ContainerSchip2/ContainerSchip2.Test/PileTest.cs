@@ -43,10 +43,31 @@ namespace ContainerSchip2.Test {
         }
 
         [TestMethod]
-        public void CheckCheckForColdMethod() {
+        public void CheckForColdMethod() {
             pile.AddContainer(new ContainerCold(0));
 
             Assert.IsTrue(pile.CheckForCold());
         }
+
+        [TestMethod]
+        public void ValuableOnTop() {
+            for (int i=0; i < 4; i++) {
+                pile.AddContainer(new Container(26000));
+            }
+
+            pile.AddValuable(new ContainerValuable(26000));
+
+            Assert.IsTrue(pile.Containers[pile.Containers.Count - 1] is ContainerValuable);
+        }
+
+        [TestMethod]
+        public void CalculateTotalWeight() {
+            for (int i = 0; i < 4; i++) {
+                pile.AddContainer(new Container(26000));
+            }
+
+            Assert.AreEqual(pile.GetTotalWeight(), 120000);
+        }
+
     }
 }

@@ -15,7 +15,8 @@ namespace ContainerSchip2 {
         public string NameRadio { get; private set; }
         List<IContainer> containers = new List<IContainer>();
 
-        public Form1() {
+        public Form1() {;
+
             InitializeComponent();
 
             foreach (var radio in Controls.OfType<RadioButton>()) {
